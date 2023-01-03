@@ -11,22 +11,39 @@ for(let i=48; i>0; i--){
     stonesList.push(stone)
 }
 
-/*----- state variables -----*/
+
 const side1 = []
 let store1
 const side2 = []
 let store2
 
+/*----- state variables -----*/
+let player1Turn = true
+
 
 /*----- cached elements  -----*/
+const playArea = document.querySelector("#playArea")
 const gameBoard = document.querySelector("#gameBoard")
 const notificationArea = document.querySelector("#notificationArea")
+const turnIndicator = document.querySelector("#turnIndicator")
+
 const moveSelector = document.querySelector("#moveSelector")
 const instructionsButton = document.querySelector("#instructionsButton")
+const instructions = document.querySelector("#instructions")
 const newGameButton = document.querySelector("#newGameButton")
 
 /*----- event listeners -----*/
-
+instructionsButton.addEventListener("click", () => {
+    if(instructions.classList.contains("hide")){
+        instructions.classList.remove("hide")
+        playArea.classList.add("hide")
+        instructionsButton.innerText = "Back"
+    } else {
+        instructions.classList.add("hide")
+        playArea.classList.remove("hide")
+        instructionsButton.innerText = "Instructions"
+    }
+})
 
 /*----- functions -----*/
 
