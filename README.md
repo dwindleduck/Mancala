@@ -156,7 +156,8 @@ IF the user clicks the Instructions button
 - As a user, I want to see the game board
 ```
 Each side of the board is an array of pit objects
-Each pit is object containing a name and an array of stones
+Each pit is an object containing a name and an array of stones
+Each store is a pit object
 All stones are used interchangably, but will eventually have unique characteristics like color
 ```
 

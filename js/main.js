@@ -33,6 +33,7 @@ const instructions = document.querySelector("#instructions")
 const newGameButton = document.querySelector("#newGameButton")
 
 /*----- event listeners -----*/
+//show/hide the instructions
 instructionsButton.addEventListener("click", () => {
     if(instructions.classList.contains("hide")){
         instructions.classList.remove("hide")
@@ -49,6 +50,8 @@ instructionsButton.addEventListener("click", () => {
 
 
 
+
+
 class Pit {
     constructor(name, numStones) {
         this.name = name
@@ -61,7 +64,21 @@ class Pit {
     isEmpty() {
        return this.contents.length === 0
     }
+    render() {
+        const pitDisplay = document.createElement("div")
+        pitDisplay.classList.add("pit")
+        pitDisplay.innerHTML = `
+            <p>${this.name}</p>
+            <p>${this.contents.length}</p>
+            <ul class="stones"></ul>`
+        for(let i=0; i<this.contents.length; i++){
+            const li = document.createElement("li")    
+            pitDisplay.querySelector(".stones").appendChild(li)
+        }
+        gameBoard.appendChild(pitDisplay)
+    }
 }
+
 
 
 
@@ -73,15 +90,21 @@ const createPits = () => {
     for(let i=0; i<6; i++){
         const pitObject = new Pit(`A${i+1}`, 4)
         side1.push(pitObject)
-    }//add to side2
-    for(let i=0; i<6; i++){
-        const pitObject = new Pit(`B${i+1}`, 4)
-        side2.push(pitObject)
+        pitObject.render()
     }
     //create store 1
     store1 = new Pit("Store1", 0)
+    store1.render()
+
+    //add to side2
+    for(let i=0; i<6; i++){
+        const pitObject = new Pit(`B${i+1}`, 4)
+        side2.push(pitObject)
+        pitObject.render()
+    }
     //create store 2
     store2 = new Pit("Store2", 0)
+    store2.render()
 }
 
 
@@ -93,10 +116,4 @@ initialize()
 
 function initialize() {
     createPits()
-    
-    //Testing
-    console.log(side1)
-    console.log(store1)
-    console.log(side2)
-    console.log(store2)
 }
