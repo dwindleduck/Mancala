@@ -29,7 +29,7 @@ Referenced primarily from https://endlessgames.com/wp-content/uploads/Mancala_In
 
 
 ## Wireframes
-![Wireframe](./assets/wireframe-P&L.png)
+![Wireframe](https://github.com/dwindleduck/Mancala/blob/main/assets/Wireframe-P%26L.png)
 
 ---
 
