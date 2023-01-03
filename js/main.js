@@ -70,10 +70,10 @@ class Pit {
         pitDisplay.innerHTML = `
             <p>${this.name}</p>
             <p>${this.contents.length}</p>
-            <ul class="stones"></ul>`
+            <ul class="stonesContainer"></ul>`
         for(let i=0; i<this.contents.length; i++){
             const li = document.createElement("li")    
-            pitDisplay.querySelector(".stones").appendChild(li)
+            pitDisplay.querySelector(".stonesContainer").appendChild(li)
         }
         gameBoard.appendChild(pitDisplay)
     }
@@ -95,16 +95,18 @@ const createPits = () => {
     //create store 1
     store1 = new Pit("Store1", 0)
     store1.render()
-
-    //add to side2
-    for(let i=0; i<6; i++){
-        const pitObject = new Pit(`B${i+1}`, 4)
-        side2.push(pitObject)
-        pitObject.render()
-    }
+    
     //create store 2
     store2 = new Pit("Store2", 0)
     store2.render()
+
+    //add to side2
+    for(let i=6; i>0; i--){
+        const pitObject = new Pit(`B${i}`, 4)
+        side2.push(pitObject)
+        pitObject.render()
+    }
+
 }
 
 

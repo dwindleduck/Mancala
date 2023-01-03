@@ -1,25 +1,25 @@
 
 
+body {
+    max-width: 800px;
+}
 
 
 
+#gameBoard {
+    display: flex;
+    flex-wrap: wrap-reverse;
+}
+.pit {
+    width: 12%;
+    margin: 1%;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
+.stonesContainer {
+    background-color: rgb(212, 212, 212);
+    max-width: 12%;
+    height: 60px;
+}
 
 
 
