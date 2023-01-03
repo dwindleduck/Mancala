@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/main.css">
+        <script src="js/main.js" async defer></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <header>
+            <h1>Mancala</h1>
+            <h3>Player 1 v Player 2</h3>
+        </header>
+        <main>
+            <div id="gameBoad">Game Board</div>
+            <div id="notificationArea">Notification Area</div>
+            <div id="moveSelector">Accessible Move Selector</div>
+        </main>
+        <div id="instructions" class="hide">
+            <h2>Game Set Up</h2>
+            <ul>
+                <li>Both sides of the board have six 'pits'</li>
+                <li>Each pit starts with for 'stones' totaling 48 stones on the board</li>
+                <li>Facing their side of the board, each player has a 'store' to the right</li>
+            </ul>
+            
+            <h2>Object of the game:</h2>
+            <ul>
+                <li>To collect the most 'stones' in your 'store' by the end of the game</li>
+                <li>The game ends when one side of the board is empty</li>
+            </ul>
+            
+            <h2>Rules</h2>
+            <ul>
+                <li>To make a move, pick up all of the stones from one pit on your side of the board</li>
+                <li>Starting counterclockwise from the selected pit, deposit one stone into each pit; including your store but skipping your opponent's store</li>
+                <li>If the last stone you drop is in your store, you get another turn</li>
+                <li>If the last stone you drop is in an empty pit on your side of the board, you capture that stone and all stones in the oponent's pit direcetly opposite.</li>
+                <li>Captured pieces go to your store</li>
+                <li>When one side of the board is completely empty, the player with stones left on their side of the board captures those pieces</li>
+                <li>The player with the most stones in their store is the winner/li>
+            </ul>
+
+        </div>
+        <footer>
+            <button id="instructionsButton">Instructions</button>
+            <button id="newGameButton">Start a New Game</button>
+        </footer>
+
+        
+    </body>
+</html>

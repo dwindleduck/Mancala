@@ -155,10 +155,8 @@ IF the user clicks the Instructions button
 
 - As a user, I want to see the game board
 ```
-The game is a class
-Each side of the board is an array of pits
-Each pit is an array of stones
-Each store is also an array of stones
+Each side of the board is an array of pit objects
+Each pit is object containing a name and an array of stones
 All stones are used interchangably, but will eventually have unique characteristics like color
 ```
 
@@ -198,8 +196,9 @@ IF the turn indicator toggle false
     Let Player 2 choose their move
 ```
 
-- As a user, I want an option for a move selector below the gameboard (accessible options picker)
-```From the options page, IF the user turns on the accessible options picker
+- As a user, I want an accessible options picker on small screens
+```
+IF the sceen is small
     Display the accessible options picker
 ```
 - As a user, I want to be able to tap or click a pit to select my move
