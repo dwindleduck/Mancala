@@ -5,7 +5,11 @@ const gamesBucket = []
 let currentGameIndex
 
 
+
+
 /*----- state variables -----*/
+
+
 
 
 /*----- cached elements  -----*/
@@ -19,6 +23,8 @@ const instructionsButton = document.querySelector("#instructionsButton")
 const instructions = document.querySelector("#instructions")
 const newGameButton = document.querySelector("#newGameButton")
 const resetButton = document.querySelector("#resetButton")
+
+
 
 
 
@@ -36,8 +42,7 @@ instructionsButton.addEventListener("click", () => {
     }
 })
 
-
-//New Game
+//New Game Button
 newGameButton.addEventListener("click", () => {
     //eventually get name as input, add functionality to switch between games
     const gameObject = new GameBoard("Player 1 v Player 2") 
@@ -49,7 +54,8 @@ newGameButton.addEventListener("click", () => {
     newGameButton.classList.add("hide")
     resetButton.classList.remove("hide")
 })
-//Reset Game
+
+//Reset Game Button
 resetButton.addEventListener("click", () => {
     gamesBucket[currentGameIndex].reset()
 
@@ -177,19 +183,19 @@ class Pit {
         //stone container
         const stonesContainer = this.pitDisplay.querySelector(".stonesContainer")
         //Add stones to the DOM
-        if(stonesContainer.childElementCount < this.contents.length) {
+        
+        //IF nothing in the pit
+        if(this.contents.length === 0){
+            //wipes out all <li>
+            stonesContainer.innerHTML = ""
+        }// Else IF not enough <li>
+        else if(stonesContainer.childElementCount < this.contents.length) {
+            //add <li> until the same as in the pit (this should handle +1 stone)
             for(let i=stonesContainer.childElementCount; i<this.contents.length; i++){
                 const li = document.createElement("li")   
                 stonesContainer.appendChild(li)
             } 
         }
-
-        //wipes out all <li> and repopulates
-        // stonesContainer.innerHTML = ""
-        // for(let i=0; i<this.contents.length; i++){
-        //     const li = document.createElement("li")   
-        //     stonesContainer.appendChild(li)
-        // } 
     }
 }
 
