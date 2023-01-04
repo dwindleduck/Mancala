@@ -1,7 +1,8 @@
 
 
 body {
-    max-width: 800px;
+    /* max-width: 800px;
+    text-align: center; */
 }
 
 
@@ -9,19 +10,44 @@ body {
 #gameBoard {
     display: flex;
     flex-wrap: wrap-reverse;
+    justify-content: space-between;
 }
 .pit {
-    width: 12%;
-    margin: 1%;
+    width: 10%;
+    margin: 0 2%;
 
 }
 .stonesContainer {
     background-color: rgb(212, 212, 212);
-    max-width: 12%;
     height: 60px;
 }
 
+.Store1 .stonesContainer {
+    /* height: 120px; */
+}
+.Store1 .name, .Store2 .name {
+    /* display: none; */
+}
+.Store2 .stonesContainer{
+    /* height: 120px; */
+}
+.A1, .A2, .A3, .A4, .A5, .A6, .Store1 {
+    /* display: flex;
+    flex-wrap: wrap-reverse;
+    justify-content: space-around;
+    margin-top: -60px; */
+}
+.B1, .B2, .B3, .B4, .B5, .B6, .Store2 {
+    /* display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; */
+}
+.A1 {
 
+}
+.B1 {
+
+}
 
 
 
