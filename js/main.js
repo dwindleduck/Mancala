@@ -67,11 +67,11 @@ class GameBoard {
     constructor(name) {
         this.name = name
 
-        //create stonesList with decending names
+        //create stonesList with unique identifiers
         //use stonesList as the 'holding' array during game play
         //also use during board reset
         this.stonesList = []
-        for(let i=48; i>0; i--){
+        for(let i=0; i<48; i++){
             let stone = {name: `stone${i}`}
             this.stonesList.push(stone)
         }
@@ -102,7 +102,7 @@ class GameBoard {
             this.side2[i].render()
         }
     }
-    
+
 
     //Empties out all Pits, then calls initialDistribution
     reset() {
@@ -170,37 +170,47 @@ class Pit {
 
     //update the dom with stone count and stonecontainer
     render() {
+        //stone count indicator
         const stoneCount = this.pitDisplay.querySelector(".stoneCount")
         stoneCount.innerHTML = this.contents.length
 
+        //stone container
         const stonesContainer = this.pitDisplay.querySelector(".stonesContainer")
-        stonesContainer.innerHTML = ""
-        for(let i=0; i<this.contents.length; i++){
-            const li = document.createElement("li")   
-            stonesContainer.appendChild(li)
-        } 
+        //Add stones to the DOM
+        if(stonesContainer.childElementCount < this.contents.length) {
+            for(let i=stonesContainer.childElementCount; i<this.contents.length; i++){
+                const li = document.createElement("li")   
+                stonesContainer.appendChild(li)
+            } 
+        }
+
+        //wipes out all <li> and repopulates
+        // stonesContainer.innerHTML = ""
+        // for(let i=0; i<this.contents.length; i++){
+        //     const li = document.createElement("li")   
+        //     stonesContainer.appendChild(li)
+        // } 
     }
 }
 
 
 //This creates new Pit objects, adds them to their array
 const createPits = (gameObject) => {
-    //add to side1
-    for(let i=0; i<6; i++){
-        const pitObject = new Pit(`A${i+1}`)
-        gameObject.side1.push(pitObject)
-    }
-    //create store 1
-    gameObject.store1 = new Pit("Store1")
-    
-    //create store 2
-    gameObject.store2 = new Pit("Store2")
-
     //add to side2
     for(let i=6; i>0; i--){
         const pitObject = new Pit(`B${i}`)
         gameObject.side2.push(pitObject)
     }
+    //add to side1
+    for(let i=0; i<6; i++){
+        const pitObject = new Pit(`A${i+1}`)
+        gameObject.side1.push(pitObject)
+    }
+    //create stores
+    gameObject.store1 = new Pit("Store1")
+    gameObject.store2 = new Pit("Store2")
+
+    //distribute stones
     gameObject.initialDistribution(4)
 }
 
@@ -210,5 +220,12 @@ const createPits = (gameObject) => {
 // initialize()
 
 // function initialize() {
- 
+//     const gameObject = new GameBoard("Player 1 v Player 2") 
+//     gamesBucket.push(gameObject)
+//     currentGameIndex = gamesBucket.indexOf(gameObject)
+    
+//     createPits(gamesBucket[currentGameIndex])
+    
+//     newGameButton.classList.add("hide")
+//     resetButton.classList.remove("hide")
 // }

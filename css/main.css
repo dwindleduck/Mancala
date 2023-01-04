@@ -1,57 +1,56 @@
 
-
 body {
-    /* max-width: 800px;
-    text-align: center; */
+    max-width: 800px;
+    text-align: center;
 }
 
 
 
 #gameBoard {
-    display: flex;
-    flex-wrap: wrap-reverse;
-    justify-content: space-between;
+    display: grid;
+    grid-template: 150px 150px / repeat(8, 1fr);
+    gap: 1%;
+    margin-bottom: 40px;
 }
-.pit {
-    width: 10%;
-    margin: 0 2%;
+.Store1 {
+    grid-column: 8;
+    grid-row: 1 / 3;
+}
+.Store2 {
+    grid-column: 1;
+    grid-row: 1 / 3;
+}
+.Store1 .name, .Store2 .name {
+    display: none;
+}
 
+.pit {
+    background-color: rgb(198, 156, 156);
+    display: grid;
+    grid-template: 1fr 1fr / 1fr 1fr;
 }
 .stonesContainer {
     background-color: rgb(212, 212, 212);
-    height: 60px;
+    /* height: 60px; */
+    grid-column: span 2;
 }
 
 .Store1 .stonesContainer {
-    /* height: 120px; */
+
 }
-.Store1 .name, .Store2 .name {
-    /* display: none; */
-}
+
 .Store2 .stonesContainer{
-    /* height: 120px; */
+
 }
-.A1, .A2, .A3, .A4, .A5, .A6, .Store1 {
-    /* display: flex;
-    flex-wrap: wrap-reverse;
-    justify-content: space-around;
-    margin-top: -60px; */
+.A1 .stonesContainer, .A2 .stonesContainer,
+.A3 .stonesContainer, .A4 .stonesContainer,
+.A5 .stonesContainer, .A6 .stonesContainer,
+.Store1 .stonesContainer{
+    order: -1;
 }
 .B1, .B2, .B3, .B4, .B5, .B6, .Store2 {
-    /* display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around; */
-}
-.A1 {
 
 }
-.B1 {
-
-}
-
-
-
-
 
 
 
@@ -60,3 +59,7 @@ body {
 .hide {
     display: none;
 }
+
+
+
+
