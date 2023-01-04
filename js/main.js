@@ -28,6 +28,7 @@ const resetButton = document.querySelector("#resetButton")
 
 
 
+
 /*----- event listeners -----*/
 //show/hide the instructions
 instructionsButton.addEventListener("click", () => {
@@ -50,7 +51,6 @@ newGameButton.addEventListener("click", () => {
     currentGameIndex = gamesBucket.indexOf(gameObject)
     
     createPits(gamesBucket[currentGameIndex])
-    
     newGameButton.classList.add("hide")
     resetButton.classList.remove("hide")
 })
@@ -88,7 +88,28 @@ class GameBoard {
         this.store2 = undefined
 
         this.player1Turn = true
+        this.pits = undefined //for event listeners
     }
+
+
+    takeTurn(pitID) {
+        console.log(pitID)
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+
 
 
     //this should only be called on an empty board
@@ -158,7 +179,8 @@ class Pit {
         //Initial Drawing
         this.pitDisplay = document.createElement("div")
         this.pitDisplay.classList.add("pit")
-        this.pitDisplay.classList.add(this.name)
+        // this.pitDisplay.classList.add(this.name)
+        this.pitDisplay.setAttribute("id", this.name)
         this.pitDisplay.innerHTML = `
             <p class="name">${this.name}</p>
             <p class="stoneCount">${this.contents.length}</p>
@@ -168,6 +190,7 @@ class Pit {
             this.pitDisplay.querySelector(".stonesContainer").appendChild(li)
         }
         gameBoard.appendChild(this.pitDisplay)
+        
     }
 
     isEmpty() {
@@ -216,6 +239,15 @@ const createPits = (gameObject) => {
     gameObject.store1 = new Pit("Store1")
     gameObject.store2 = new Pit("Store2")
 
+    gameObject.pits = document.querySelectorAll(".pit")
+    
+    //Event Listener's for pits
+    gameObject.pits.forEach(pit => {
+        pit.addEventListener("click", (e) => {
+            gameObject.takeTurn(e.currentTarget.getAttribute("id"))
+        })
+    })
+
     //distribute stones
     gameObject.initialDistribution(4)
 }
@@ -223,15 +255,11 @@ const createPits = (gameObject) => {
 
 
 
+
+
+
 // initialize()
 
 // function initialize() {
-//     const gameObject = new GameBoard("Player 1 v Player 2") 
-//     gamesBucket.push(gameObject)
-//     currentGameIndex = gamesBucket.indexOf(gameObject)
-    
-//     createPits(gamesBucket[currentGameIndex])
-    
-//     newGameButton.classList.add("hide")
-//     resetButton.classList.remove("hide")
+
 // }
