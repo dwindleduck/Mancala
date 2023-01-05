@@ -157,7 +157,7 @@ IF the user clicks the Instructions button
 ```
 Each side of the board is an array of pit objects
 Each pit is an object containing a name and an array of stones
-Each store is a pit object
+Each store is a pit object, not in the arrays
 All stones are used interchangably, but will eventually have unique characteristics like color
 ```
 
@@ -193,15 +193,10 @@ When a turn is over, flip the toggle
 
 - As a user, I want to be able to play against another human on the same device
 ```
-IF the turn indicator toggle false
+IF the turn indicator toggle is false
     Let Player 2 choose their move
 ```
 
-- As a user, I want an accessible options picker on small screens
-```
-IF the sceen is small
-    Display the accessible options picker
-```
 - As a user, I want to be able to tap or click a pit to select my move
 ```
 When the user chooses a pit (click, tap, or input selector)
@@ -256,4 +251,15 @@ IF the user's store has more stones than the opponent's store
     Display that the user won
 ELSE
     Dispay that the opponent won
+```
+
+
+
+---
+## Moved to Version 2?
+
+- As a user, I want an accessible options picker on small screens
+```
+IF the sceen is small
+    Display the accessible options picker
 ```

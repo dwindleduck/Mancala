@@ -167,19 +167,17 @@ class GameBoard {
                     }
                     otherSideOfTheBoard[indexOfOppositePit].render()
 
-                    console.log(this.stonesList)
-                    console.log(this.stonesList.length)
-                    
-
                     //Drop them in my store
                     while(this.stonesList.length>0){
                         myStore.contents.push(this.stonesList.pop())
                     }
-                    console.log(this.stonesList)
                     myStore.render()
 
                     //update notification area with "Captured!"
+
                     //check for end of game
+                    this.checkForEndOfGame()
+
                     this.player1Turn = !this.player1Turn
                     return // ends the turn
                 } 
@@ -196,6 +194,7 @@ class GameBoard {
                     //Update Notification Area with "Free Turn!"
                     //do not change the turn indicator
                     //check for end of game
+                    this.checkForEndOfGame()
                     return //ends the turn
                 }
                 indexOfPit = 0
@@ -211,10 +210,72 @@ class GameBoard {
             //omit the other player's store
         }
         //check for end of game
+        //console.log("Game Over: " + this.checkForEndOfGame())
         //change turn indicator, change dom display
         this.player1Turn = !this.player1Turn
     }//END OF TAKE TURN
 
+
+
+    findSideTotal(side) {
+        let sideTotal = 0
+        for(let i=0; i<6; i++){ //loop side pits
+            sideTotal += side[i].contents.length
+        }
+        return sideTotal
+    }
+
+
+    //check for end of game
+    //returns true if game is over
+    //else returns false
+    checkForEndOfGame() {
+        if(this.findSideTotal(this.side1) === 0) {
+            //move all stones from side2 into holding then store2
+            for(let j = 0; j<this.side2.length; j++) {
+                for(let i=this.side2[j].contents.length; i>0; i--){
+                    this.stonesList.push(this.side2[j].contents.pop())
+                    this.side2[j].render()
+                }
+            }
+            while(this.stonesList.length>0){
+                this.store2.contents.push(this.stonesList.pop())
+            }
+            this.store2.render()
+            return true //game over
+        } 
+        else if(this.findSideTotal(this.side2) === 0) {
+            //move all stones from side1 into holding then store1
+            for(let j = 0; j<this.side1.length; j++) {
+                for(let i=this.side1[j].contents.length; i>0; i--){
+                    this.stonesList.push(this.side1[j].contents.pop())
+                    this.side1[j].render()
+                }
+            }
+            while(this.stonesList.length>0){
+                this.store1.contents.push(this.stonesList.pop())
+            }
+            this.store1.render()
+            return true //game over
+        } 
+        else {
+            return false
+        }
+    }
+
+    //called if end of game is true
+    checkForWinner() {
+        if(this.store1.contents.length > this.store2.contents.length) {
+            console.log("Player 1 Wins")
+        }
+        else if(this.store2.contents.length > this.store1.contents.length) {
+            console.log("Player 2 Wins")
+        }
+        else if(this.store2.contents.length === this.store1.contents.length) {
+            console.log("It's a Tie!")
+        }
+    }
+                   
 
 
 
@@ -335,7 +396,7 @@ class Pit {
 
 
 
-
+//called from the Event Listener on newGameButton
 //This creates new Pit objects, adds them to their array
 const createPits = (gameObject) => {
     //add to side2
@@ -358,6 +419,8 @@ const createPits = (gameObject) => {
     gameObject.pits.forEach(pit => {
         pit.addEventListener("click", (e) => {
             gameObject.takeTurn(e.currentTarget.getAttribute("id"))
+            if(gameObject.checkForEndOfGame()) {gameObject.checkForWinner()}
+            
         })
     })
 
@@ -367,6 +430,9 @@ const createPits = (gameObject) => {
     // console.log(gameObject.side2)
 
 }
+
+
+
 
 
 
