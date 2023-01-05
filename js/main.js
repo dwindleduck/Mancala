@@ -16,6 +16,9 @@ let currentGameIndex
 const playArea = document.querySelector("#playArea")
 const gameBoard = document.querySelector("#gameBoard")
 const gameTitle = document.querySelector("#gameTitle")
+const player1Username = document.querySelector("#player1Username")
+const player2Username = document.querySelector("#player2Username")
+
 const notificationArea = document.querySelector("#notificationArea")
 const turnIndicator = document.querySelector("#turnIndicator")
 
@@ -48,14 +51,24 @@ instructionsButton.addEventListener("click", () => {
 newGameButton.addEventListener("click", () => {
     //eventually get name as input, add functionality to switch between games
     gameBoard.innerHTML = ""
-    const gameObject = new GameBoard("Player 1 v Player 2") 
+    const gameObject = new GameBoard("Player 1", "Player 2") 
     gamesBucket[0] = gameObject
     //gamesBucket.push(gameObject) //use this for multiple games 
     currentGameIndex = gamesBucket.indexOf(gameObject)
 
+
+
+
     createPits(gamesBucket[currentGameIndex])
     gameBoard.style.display = "grid"
     gameTitle.innerText = gameObject.name
+
+    player1Username.innerText = gameObject.p1Username
+    // console.log(player1Username)
+    player1Username.classList.remove("hide")
+    player2Username.innerText = gameObject.p2Username
+    player2Username.classList.remove("hide")
+
     notificationArea.innerHTML = ""
     notificationArea.classList.remove("hide")
     turnIndicator.classList.remove("hide")
@@ -79,8 +92,10 @@ resetButton.addEventListener("click", () => {
 
 
 class GameBoard {
-    constructor(name) {
-        this.name = name
+    constructor(player1name, player2name) {
+        this.name = player1name + " v " + player2name
+        this.p1Username = player1name
+        this.p2Username = player2name
 
         //create stonesList with unique identifiers
         //use stonesList as the 'holding' array during game play
