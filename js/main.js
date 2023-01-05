@@ -47,15 +47,16 @@ instructionsButton.addEventListener("click", () => {
 //New Game Button
 newGameButton.addEventListener("click", () => {
     //eventually get name as input, add functionality to switch between games
+    gameBoard.innerHTML = ""
     const gameObject = new GameBoard("Player 1 v Player 2") 
-    gamesBucket.push(gameObject)
+    gamesBucket[0] = gameObject
+    //gamesBucket.push(gameObject) //use this for multiple games 
     currentGameIndex = gamesBucket.indexOf(gameObject)
-    
 
     createPits(gamesBucket[currentGameIndex])
     gameBoard.style.display = "grid"
     gameTitle.innerText = gameObject.name
-    notificationArea.innerText = ""
+    notificationArea.innerHTML = ""
     notificationArea.classList.remove("hide")
     turnIndicator.classList.remove("hide")
     turnIndicator.innerText = "Player 1's Turn"
@@ -110,7 +111,7 @@ class GameBoard {
         let myStore
 
         //when a pit is clicked on, remove old notification
-        notificationArea.innerText = ""
+        notificationArea.innerHTML = ""
 
         //player1's turn
         if(this.player1Turn){
@@ -184,7 +185,7 @@ class GameBoard {
                     myStore.render()
 
                     //update notification area with "Captured!"
-                    notificationArea.innerText = "Captured!"
+                    notificationArea.innerHTML = `<p>Captured!</p>`
                     //animate fade away
 
 
@@ -205,7 +206,8 @@ class GameBoard {
                 //IF last stone is dropped in my store --> take another turn
                 if(this.stonesList.length === 0){
                     //Update Notification Area with "Free Turn!"
-                    notificationArea.innerText = "Free Turn!"
+                    notificationArea.innerHTML = `<p>Free Turn!</p>`
+                
 
                     //check for end of game
                     //this.checkForEndOfGame()
@@ -286,14 +288,22 @@ class GameBoard {
         turnIndicator.classList.add("hide")
 
         if(this.store1.contents.length > this.store2.contents.length) {
-            notificationArea.innerText = "Player 1 Wins"
+            notificationArea.innerHTML = `
+            <p>Player 1 Wins</p>
+            <p>${this.store1.contents.length} to ${this.store2.contents.length}</p>
+            `
         }
         else if(this.store2.contents.length > this.store1.contents.length) {
-            notificationArea.innerText = "Player 2 Wins"
+            notificationArea.innerHTML = `
+            <p>Player 2 Wins</p>
+            <p>${this.store2.contents.length} to ${this.store1.contents.length}</p>
+            `
         }
         else if(this.store2.contents.length === this.store1.contents.length) {
-            notificationArea.innerText = "It's a Tie!"
+            notificationArea.innerHTML = `<p>It's a Tie!</p>`
         }
+        newGameButton.classList.remove("hide")
+        resetButton.classList.add("hide")
     }
                    
 
@@ -356,9 +366,9 @@ class GameBoard {
         }
         //Now all stones are back in the stonesList, so redistribute them
         this.initialDistribution(4)
-        notificationArea.innerText = ""
-        this.player1Turn = false
-        this.switchTurns()
+        notificationArea.innerHTML = ""
+        this.player1Turn = true
+        turnIndicator.innerText = "Player 1's Turn"
     }
 }
 
