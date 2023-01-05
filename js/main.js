@@ -15,6 +15,7 @@ let currentGameIndex
 /*----- cached elements  -----*/
 const playArea = document.querySelector("#playArea")
 const gameBoard = document.querySelector("#gameBoard")
+const gameTitle = document.querySelector("#gameTitle")
 const notificationArea = document.querySelector("#notificationArea")
 const turnIndicator = document.querySelector("#turnIndicator")
 
@@ -50,8 +51,14 @@ newGameButton.addEventListener("click", () => {
     gamesBucket.push(gameObject)
     currentGameIndex = gamesBucket.indexOf(gameObject)
     
+
     createPits(gamesBucket[currentGameIndex])
     gameBoard.style.display = "grid"
+    gameTitle.innerText = gameObject.name
+    notificationArea.innerText = ""
+    notificationArea.classList.remove("hide")
+    turnIndicator.classList.remove("hide")
+    turnIndicator.innerText = "Player 1's Turn"
     newGameButton.classList.add("hide")
     resetButton.classList.remove("hide")
 })
@@ -101,6 +108,9 @@ class GameBoard {
         let mySideOfTheBoard
         let otherSideOfTheBoard
         let myStore
+
+        //when a pit is clicked on, remove old notification
+        notificationArea.innerText = ""
 
         //player1's turn
         if(this.player1Turn){
@@ -174,11 +184,14 @@ class GameBoard {
                     myStore.render()
 
                     //update notification area with "Captured!"
+                    notificationArea.innerText = "Captured!"
+                    //animate fade away
+
 
                     //check for end of game
-                    this.checkForEndOfGame()
-
-                    this.player1Turn = !this.player1Turn
+                    //this.checkForEndOfGame()
+                    this.switchTurns()
+                    //this.player1Turn = !this.player1Turn
                     return // ends the turn
                 } 
                 indexOfPit++
@@ -192,9 +205,12 @@ class GameBoard {
                 //IF last stone is dropped in my store --> take another turn
                 if(this.stonesList.length === 0){
                     //Update Notification Area with "Free Turn!"
-                    //do not change the turn indicator
+                    notificationArea.innerText = "Free Turn!"
+
                     //check for end of game
-                    this.checkForEndOfGame()
+                    //this.checkForEndOfGame()
+
+                    //do not switchTurns()
                     return //ends the turn
                 }
                 indexOfPit = 0
@@ -212,8 +228,10 @@ class GameBoard {
         //check for end of game
         //console.log("Game Over: " + this.checkForEndOfGame())
         //change turn indicator, change dom display
-        this.player1Turn = !this.player1Turn
+        this.switchTurns()
+        // this.player1Turn = !this.player1Turn
     }//END OF TAKE TURN
+
 
 
 
@@ -265,19 +283,28 @@ class GameBoard {
 
     //called if end of game is true
     checkForWinner() {
+        turnIndicator.classList.add("hide")
+
         if(this.store1.contents.length > this.store2.contents.length) {
-            console.log("Player 1 Wins")
+            notificationArea.innerText = "Player 1 Wins"
         }
         else if(this.store2.contents.length > this.store1.contents.length) {
-            console.log("Player 2 Wins")
+            notificationArea.innerText = "Player 2 Wins"
         }
         else if(this.store2.contents.length === this.store1.contents.length) {
-            console.log("It's a Tie!")
+            notificationArea.innerText = "It's a Tie!"
         }
     }
                    
 
-
+    switchTurns() {
+        this.player1Turn = !this.player1Turn
+        if(this.player1Turn) {
+            turnIndicator.innerText = "Player 1's Turn"
+        } else {
+            turnIndicator.innerText = "Player 2's Turn"
+        }
+    }
 
 
     //this should only be called on an empty board
@@ -329,7 +356,9 @@ class GameBoard {
         }
         //Now all stones are back in the stonesList, so redistribute them
         this.initialDistribution(4)
-        this.player1Turn = true
+        notificationArea.innerText = ""
+        this.player1Turn = false
+        this.switchTurns()
     }
 }
 
@@ -420,7 +449,6 @@ const createPits = (gameObject) => {
         pit.addEventListener("click", (e) => {
             gameObject.takeTurn(e.currentTarget.getAttribute("id"))
             if(gameObject.checkForEndOfGame()) {gameObject.checkForWinner()}
-            
         })
     })
 
@@ -430,6 +458,7 @@ const createPits = (gameObject) => {
     // console.log(gameObject.side2)
 
 }
+
 
 
 
