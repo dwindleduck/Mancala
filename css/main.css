@@ -20,6 +20,20 @@ body {
     grid-column: 1;
     grid-row: 1 / 3;
 }
+#B1{
+    order: -1;
+}#B2{
+    order: -2;
+}#B3{
+    order: -3;
+}#B4{
+    order: -4;
+}#B5{
+    order: -5;
+}#B6 {
+    order: -6;
+}
+
 #Store1 .name, #Store2 .name {
     display: none;
 }
@@ -48,9 +62,7 @@ body {
 #Store1 .stonesContainer{
     order: -1;
 }
-/* .B1, .B2, .B3, .B4, .B5, .B6, .Store2 {
 
-} */
 
 
 
