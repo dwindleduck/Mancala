@@ -51,6 +51,7 @@ newGameButton.addEventListener("click", () => {
     currentGameIndex = gamesBucket.indexOf(gameObject)
     
     createPits(gamesBucket[currentGameIndex])
+    gameBoard.style.display = "grid"
     newGameButton.classList.add("hide")
     resetButton.classList.remove("hide")
 })
@@ -92,23 +93,97 @@ class GameBoard {
     }
 
 
+
+
     takeTurn(pitID) {
         console.log(pitID)
+        let selectedPit = undefined
+        let indexOfPit = 0
+        let mySideOfTheBoard
+        let otherSideOfTheBoard
+        let myStore
+
+        //player1's turn
+        if(this.player1Turn){
+            //loop through side 1
+            while(indexOfPit<this.side1.length && selectedPit === undefined){
+                //for(let i=0; i<this.side1.length; i++){
+                //IF the name of the current element matches the pitID
+                if(this.side1[indexOfPit].name === pitID){
+                    selectedPit = this.side1[indexOfPit]
+                    mySideOfTheBoard = this.side1
+                    otherSideOfTheBoard = this.side2
+                    myStore = this.store1
+                }
+                indexOfPit++
+            }
+        } else { //player2's turn
+            while(indexOfPit<this.side1.length && selectedPit === undefined){
+                //for(let i=0; i<this.side2.length; i++){
+                if(this.side2[indexOfPit].name === pitID){
+                    selectedPit = this.side2[indexOfPit]
+                    mySideOfTheBoard = this.side2
+                    otherSideOfTheBoard = this.side1
+                    myStore = this.store2
+                }
+                indexOfPit++
+            }
+        }
+        if(selectedPit === undefined) return // break out of this function if not your turn
+        //from here it is your turn,
+        //a pit has been selected,
+        //and the indexOfPit is +1 from the selected pit
+
+        //move all stones from selected pit into holding array
+        for(let i=selectedPit.contents.length; i>0; i--){
+            this.stonesList.push(selectedPit.contents.pop())
+            selectedPit.render()
+        }
+
+        //need to add some animation stuff here
+
+
+        //starting counterclockwise, deposit one stone into each pit, skipping opponent's store
+        while(this.stonesList.length>0) {
+            //WHILE there are stones in holding and we are still on our side of the board
+            while(this.stonesList.length>0 && indexOfPit < 6){
+                mySideOfTheBoard[indexOfPit].contents.push(this.stonesList.pop())
+                mySideOfTheBoard[indexOfPit].render()
+                indexOfPit++
+            }
+            //After mySideOfTheBoard 
+            //IF there are stones in holding, deposit one into my store
+            console.log(this.stonesList)
+            if(this.stonesList.length>0){
+                myStore.contents.push(this.stonesList.pop())
+                myStore.render()
+                indexOfPit = 0
+            }
+            while(this.stonesList.length>0 && indexOfPit < 6){
+                otherSideOfTheBoard[indexOfPit].contents.push(this.stonesList.pop())
+                otherSideOfTheBoard[indexOfPit].render()
+                indexOfPit++
+            }
+            indexOfPit = 0 //reset to start again on my side of the board
+            //omit the other player's store
+        }
 
 
 
 
+        // console.log(this.stonesList)
+        // console.log(indexOfPit)
 
 
+        //IF last stone is in my store --> take another turn
+        //IF last stone is in an empty space on my side --> Capture stones in opposite space
+        
 
-
-
-
-
+        //update notification area
+        //change turn indicator, change dom display
 
 
     }
-
 
 
 
@@ -223,6 +298,11 @@ class Pit {
 }
 
 
+
+
+
+
+
 //This creates new Pit objects, adds them to their array
 const createPits = (gameObject) => {
     //add to side2
@@ -250,6 +330,10 @@ const createPits = (gameObject) => {
 
     //distribute stones
     gameObject.initialDistribution(4)
+    console.log(gameObject.side1)
+    console.log(gameObject.side2)
+    // console.log(gameObject.store1)
+    // console.log(gameObject.store2)
 }
 
 
