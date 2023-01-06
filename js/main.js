@@ -66,6 +66,8 @@ newGameButton.addEventListener("click", () => {
 
 
 
+    //Maybe this is an initialize function?
+
 
     createPits(gamesBucket[currentGameIndex])
     gameBoard.style.display = "grid"
@@ -109,8 +111,15 @@ class GameBoard {
         //use stonesList as the 'holding' array during game play
         //also use during board reset
         this.stonesList = []
+        
+        const colorList = ["red", "blue", "green", "purple"]
+
         for(let i=0; i<48; i++){
-            let stone = {name: `stone${i}`}
+            //need to attach color to the stone here
+            let stone = {
+                name: `stone${i}`,
+                color: colorList[i%colorList.length]
+            }
             this.stonesList.push(stone)
         }
 
@@ -416,11 +425,14 @@ class Pit {
         this.pitDisplay.innerHTML = `
             <p class="name">${this.name}</p>
             <p class="stoneCount">${this.contents.length}</p>
-            <ul class="stonesContainer"></ul>`
-        for(let i=0; i<this.contents.length; i++){
-            const li = document.createElement("li")    
-            this.pitDisplay.querySelector(".stonesContainer").appendChild(li)
-        }
+            <ul class="stonesContainer"></ul>
+            `
+        //add Stones to the DOM
+        // for(let i=0; i<this.contents.length; i++){
+        //     const li = document.createElement("li")
+        //     // li.style.backgroundColor = this.contents[i].color    
+        //     this.pitDisplay.querySelector(".stonesContainer").appendChild(li)
+        // }
         gameBoard.appendChild(this.pitDisplay)
         
     }
@@ -447,7 +459,9 @@ class Pit {
         else if(stonesContainer.childElementCount < this.contents.length) {
             //add <li> until the same as in the pit (this should handle +1 stone)
             for(let i=stonesContainer.childElementCount; i<this.contents.length; i++){
-                const li = document.createElement("li")   
+                const li = document.createElement("li")
+                //**** check on the i logic here, might asign the wrong color?
+                li.style.backgroundColor = this.contents[i].color 
                 stonesContainer.appendChild(li)
             } 
         }
