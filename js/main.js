@@ -38,10 +38,14 @@ const resetButton = document.querySelector("#resetButton")
 instructionsButton.addEventListener("click", () => {
     if(instructions.classList.contains("hide")){
         instructions.classList.remove("hide")
+        // newGameButton.classList.add("hide")
+        // resetButton.classList.add("hide")
         playArea.classList.add("hide")
         instructionsButton.innerText = "Back"
     } else {
         instructions.classList.add("hide")
+        // newGameButton.classList.remove("hide")
+        // resetButton.classList.remove("hide")
         playArea.classList.remove("hide")
         instructionsButton.innerText = "Instructions"
     }
