@@ -36,18 +36,22 @@ const resetButton = document.querySelector("#resetButton")
 /*----- event listeners -----*/
 //show/hide the instructions
 instructionsButton.addEventListener("click", () => {
+    //IF the instructions are hidden, show them
     if(instructions.classList.contains("hide")){
         instructions.classList.remove("hide")
-        // newGameButton.classList.add("hide")
-        // resetButton.classList.add("hide")
+        newGameButton.classList.add("hide")
+        resetButton.classList.add("hide")
         playArea.classList.add("hide")
         instructionsButton.innerText = "Back"
     } else {
         instructions.classList.add("hide")
-        // newGameButton.classList.remove("hide")
-        // resetButton.classList.remove("hide")
+        newGameButton.classList.remove("hide")
         playArea.classList.remove("hide")
         instructionsButton.innerText = "Instructions"
+        //IF there is a game going on, show the reset button
+        if(gamesBucket.length>0) {
+            resetButton.classList.remove("hide")
+        }
     }
 })
 
@@ -77,7 +81,7 @@ newGameButton.addEventListener("click", () => {
     notificationArea.classList.remove("hide")
     turnIndicator.classList.remove("hide")
     turnIndicator.innerText = "Player 1's Turn"
-    newGameButton.classList.add("hide")
+    // newGameButton.classList.add("hide")
     resetButton.classList.remove("hide")
 })
 
@@ -306,18 +310,19 @@ class GameBoard {
     checkForWinner() {
         turnIndicator.classList.add("hide")
 
+        //IF Player1 has more than Player2
         if(this.store1.contents.length > this.store2.contents.length) {
             notificationArea.innerHTML = `
             <p>Player 1 Wins</p>
             <p>${this.store1.contents.length} to ${this.store2.contents.length}</p>
             `
-        }
+        }//IF Player 2 has more than Player1
         else if(this.store2.contents.length > this.store1.contents.length) {
             notificationArea.innerHTML = `
             <p>Player 2 Wins</p>
             <p>${this.store2.contents.length} to ${this.store1.contents.length}</p>
             `
-        }
+        }//IF Its a Tie
         else if(this.store2.contents.length === this.store1.contents.length) {
             notificationArea.innerHTML = `<p>It's a Tie!</p>`
         }

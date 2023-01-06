@@ -9,7 +9,7 @@
 ### Game set up
 - Both sides of the board have six Pits
 - Each Pit starts with four Stones totaling 48 stones on the board
-- All the Stones are the same and are used interchangeably 
+- All the Stones are the same and are used interchangably 
 - Facing their side of the board, each player's Store is to the right 
 
 
@@ -19,7 +19,7 @@
 - To make a move, select a Pit from your side of the board and pick up all of the Stones inside
 - Starting counterclockwise from the selected Pit, deposit one Stone into each Pit - *including your Store but skipping your opponent's Store*
  - If the last Stone you drop is in your Store, you get another turn
- - If the last Stone you drop is in an empty Pit on your side of the board, you capture that Stone and all Stones in the opponent's Pit directly opposite - *captured Stones go to your Store*
+ - If the last Stone you drop is in an empty Pit on your side of the board, you capture that Stone and all Stones in the oponent's Pit direcetly opposite - *captured Stones go to your Store*
  - The game ends when one side of the board is empty
  - If the game is over, the player with Stones left on their side of the board captures those Stones - *captured Stones go to your Store*
  - The player with the most Stones in their Store is the winner
