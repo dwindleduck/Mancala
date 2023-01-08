@@ -210,7 +210,7 @@ h1 {
 @media (max-width:320px) { 
     html {
         justify-content: left;
-        align-items:flex-start;
+        align-items: flex-start;
     }
     
     #A1, #A2, #A3, #A4, #A5, #A6 {
