@@ -43,9 +43,7 @@ instructionsButton.addEventListener("click", () => {
 //New Game Button
 newGameButton.addEventListener("click", () => {
     gameBoard.innerHTML = ""
-    //eventually get usernames as input, add functionality to switch between games
     const gameObject = new GameBoard("Player 1", "Player 2") 
-    //gamesBucket.push(gameObject) //replace the next line for multiple games 
     gamesBucket[0] = gameObject
     currentGameIndex = gamesBucket.indexOf(gameObject)
 })
@@ -54,6 +52,8 @@ newGameButton.addEventListener("click", () => {
 resetButton.addEventListener("click", () => {
     gamesBucket[currentGameIndex].reset()
 })
+
+
 
 
 /*----- functions -----*/
@@ -113,9 +113,9 @@ class GameBoard {
         //when a pit is clicked on, remove old notification
         notificationArea.innerHTML = ""
 
-        //if player1's turn, initialize the local variables
+        //initialize the local variables the selected pit is on the correct side
         if(this.player1Turn){
-            //loop through side 1
+            //check if the selected pit is on side 1
             while(indexOfPit<this.side1.length && selectedPit === undefined){
                 //IF the name of the current element matches the pitID
                 if(this.side1[indexOfPit].name === pitID){
@@ -127,7 +127,8 @@ class GameBoard {
                 indexOfPit++
             }
         } else { //player2's turn
-            while(indexOfPit<this.side1.length && selectedPit === undefined){
+            //check if the selected pit is on side2
+            while(indexOfPit<this.side2.length && selectedPit === undefined){
                 if(this.side2[indexOfPit].name === pitID){
                     selectedPit = this.side2[indexOfPit]
                     mySideOfTheBoard = this.side2
@@ -142,13 +143,9 @@ class GameBoard {
         //and the indexOfPit is +1 from the selected pit (couterclockwise)
 
         //move all stones from selected pit into holding array
-        for(let i=selectedPit.contents.length; i>0; i--){
-            this.stonesList.push(selectedPit.contents.pop())
-            selectedPit.render()
-            //need to add some animation stuff here or in the render() function
-        }
-
-        //deposit the stones
+        selectedPit.moveAllStonesIntoStonesList(this.stonesList)
+    
+        //Deposit the stones
         //starting counterclockwise, deposit one stone into each pit, skipping opponent's store
         while(this.stonesList.length>0) {
             
@@ -160,31 +157,23 @@ class GameBoard {
                 //IF LAST STONE is dropped in an empty space on my side
                 if(this.stonesList.length === 0 && mySideOfTheBoard[indexOfPit].contents.length === 1){
                     //get the last stone back from our pit
-                    this.stonesList.push(mySideOfTheBoard[indexOfPit].contents.pop())
-                    mySideOfTheBoard[indexOfPit].render()
+                    mySideOfTheBoard[indexOfPit].moveAllStonesIntoStonesList(this.stonesList)
                     
                     //Capture stones in opposite space if they are there
-                   let indexOfOppositePit = Math.abs(indexOfPit-5)
-
-                    for(let i = otherSideOfTheBoard[indexOfOppositePit].contents.length; i>0; i--){
-                        this.stonesList.push(otherSideOfTheBoard[indexOfOppositePit].contents.pop())
-                    }
-                    otherSideOfTheBoard[indexOfOppositePit].render()
+                    let indexOfOppositePit = Math.abs(indexOfPit-5)
+                    otherSideOfTheBoard[indexOfOppositePit].moveAllStonesIntoStonesList(this.stonesList)
 
                     //Drop them in my store
-                    while(this.stonesList.length>0){
-                        myStore.contents.push(this.stonesList.pop())
-                    }
-                    myStore.render()
-
+                    myStore.dropAllStonesHere(this.stonesList)
+                    
                     //update notification area with "Captured!"
                     notificationArea.innerHTML = `<p>Captured!</p>`
-                    //animate fade away
                     this.switchTurns()
                     return // ends the turn
                 } 
                 indexOfPit++
             }
+
             //After mySideOfTheBoard 
             //IF there are stones in holding, deposit one into my store
             if(this.stonesList.length>0){
@@ -227,31 +216,15 @@ class GameBoard {
         //If Side1 is empty
         if(this.findSideTotal(this.side1) === 0) {
             //move all stones from side2 into holding then store2
-            for(let j = 0; j<this.side2.length; j++) {
-                for(let i=this.side2[j].contents.length; i>0; i--){
-                    this.stonesList.push(this.side2[j].contents.pop())
-                    this.side2[j].render()
-                }
-            }
-            while(this.stonesList.length>0){
-                this.store2.contents.push(this.stonesList.pop())
-            }
-            this.store2.render()
+            this.side2.forEach(pit => pit.moveAllStonesIntoStonesList(this.stonesList))
+            this.store2.dropAllStonesHere(this.stonesList)
             return true //game over
         } 
         //Else If Side2 is emtpy
         else if(this.findSideTotal(this.side2) === 0) {
             //move all stones from side1 into holding then store1
-            for(let j = 0; j<this.side1.length; j++) {
-                for(let i=this.side1[j].contents.length; i>0; i--){
-                    this.stonesList.push(this.side1[j].contents.pop())
-                    this.side1[j].render()
-                }
-            }
-            while(this.stonesList.length>0){
-                this.store1.contents.push(this.stonesList.pop())
-            }
-            this.store1.render()
+            this.side1.forEach(pit => pit.moveAllStonesIntoStonesList(this.stonesList))
+            this.store1.dropAllStonesHere(this.stonesList)
             return true //game over
         } 
         else {
@@ -301,40 +274,17 @@ class GameBoard {
 
     //Empties out all Pits, then calls initialDistribution
     reset() {   
-        //Side 1: loop through array of pits
-        for(let i=0; i<this.side1.length; i++){
-            //loop through array of stones
-            for(let j=this.side1[i].contents.length; j>0; j--){
-                //add the stones back to the holding array
-                this.stonesList.push(this.side1[i].contents.pop())
-            }
-            this.side1[i].render()
-        }
-        //Side 2:
-        for(let i=0; i<this.side2.length; i++){
-            //loop through array of stones
-            for(let j=this.side2[i].contents.length; j>0; j--){
-                //add the stones back to the holding array
-                this.stonesList.push(this.side2[i].contents.pop())
-            }
-            this.side2[i].render()
-        }
-        for(let i=this.store1.contents.length; i>0; i--){
-            this.stonesList.push(this.store1.contents.pop())
-            this.store1.render()
-        }
-        for(let i=this.store2.contents.length; i>0; i--){
-            this.stonesList.push(this.store2.contents.pop())
-            this.store2.render()
-        }
+        //Get all the stones
+        this.side1.forEach(pit => pit.moveAllStonesIntoStonesList(this.stonesList))
+        this.side2.forEach(pit => pit.moveAllStonesIntoStonesList(this.stonesList))
+        this.store1.moveAllStonesIntoStonesList(this.stonesList)
+        this.store2.moveAllStonesIntoStonesList(this.stonesList)
+
         //Now all stones are back in the stonesList, so redistribute them
         this.initialDistribution(4)
-        // notificationArea.innerHTML = ""
-        // this.player1Turn = true
-        // turnIndicator.innerText = "Player 1's Turn"
+        
         this.player1Turn = false
         this.switchTurns()
-
     }
 
     //this should only be called on an empty board (during setup, reset)
@@ -412,6 +362,23 @@ class Pit {
        return this.contents.length === 0
     }
 
+
+    moveAllStonesIntoStonesList(stonesList) {
+        for(let i=this.contents.length; i>0; i--){
+            stonesList.push(this.contents.pop())
+            this.render()
+            //need to add some animation stuff here or in the render() function
+        }
+    }
+
+
+    dropAllStonesHere(stonesList) {
+        while(stonesList.length>0){
+            this.contents.push(stonesList.pop())
+        }
+        this.render()
+    }
+    
 
     //update the dom with stone count and stonecontainer
     render() {
