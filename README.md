@@ -20,13 +20,15 @@ The object of the game is to collect the most Stones in your Store by the end of
 ## Next Steps
 
 ### Version 2
+- As a user, I want the stones to animate moving from one position to the next
 - As a user, I want an accessible options picker on small screens
 - As a user, I want to be able to keep track of wins/losses (game score)
 - As a user, I want to reset the game score
-- As a user, I want to be able to save a game to resume later
+- As a user, I want to be able to save a game and switch to another
 - As a user, I want to select who goes first on the first game
 - As a user, I want who goes first to alternate every game
 - As a user, I want to be able to choose appearance of the stones
+- As a user, I want to be able to choose the theme of the game board
 - As a user, I want to be able to select my username
 - As a user, I want choose my avatar
 - As a user, I want see the avatar and username of who is playing

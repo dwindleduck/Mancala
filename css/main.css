@@ -206,13 +206,15 @@ h1 {
 }
 
 
-/* For screens under 320px wide */
-@media (max-width:320px) { 
+/* For screens under 360px wide */
+@media (max-width:360px) { 
     html {
         justify-content: left;
         align-items: flex-start;
     }
-    
+    body {
+        margin: 10px auto;
+    }
     #A1, #A2, #A3, #A4, #A5, #A6 {
         grid-template: 4fr 16px / 16px 1fr 16px;
     }
