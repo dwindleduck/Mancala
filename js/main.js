@@ -1,7 +1,7 @@
 /*----- constants -----*/
-const gamesBucket = []
+const gamesBucket = [] // nice way to handle keeping score from multiple games! 
 
-/*----- state variables -----*/
+/*----- state variables -----*/ // <3 love the comment style for sections
 let currentGameIndex
 
 /*----- cached elements  -----*/
@@ -18,7 +18,7 @@ const instructions = document.querySelector("#instructions")
 const newGameButton = document.querySelector("#newGameButton")
 const resetButton = document.querySelector("#resetButton")
 
-/*----- event listeners -----*/
+/*----- event listeners -----*/ // i would have event listeners last but that's a preference 
 //show/hide the instructions
 instructionsButton.addEventListener("click", () => {
     //IF the instructions are hidden, show them
@@ -56,7 +56,7 @@ resetButton.addEventListener("click", () => {
 
 
 
-/*----- functions -----*/
+/*----- functions -----*/ // I think this should be classes instead - semantics 
 class GameBoard {
     constructor(player1name, player2name) {
         this.name = player1name + " v " + player2name
@@ -79,7 +79,7 @@ class GameBoard {
             //create a stone, attach a name and a color
             let stone = {
                 name: `stone${i}`,
-                color: colorList[i%colorList.length]
+                color: colorList[i%colorList.length] // love this use of %
             }
             this.stonesList.push(stone)
         }
@@ -200,7 +200,7 @@ class GameBoard {
             //omit the other player's store
         }
         this.switchTurns()
-    }//END OF TAKE TURN
+    }//END OF TAKE TURN // great helpful comment 
 
 
     findSideTotal(side) {
@@ -257,7 +257,7 @@ class GameBoard {
         newGameButton.classList.remove("hide")
         resetButton.classList.add("hide")
     }
-                   
+
 
     switchTurns() {
         this.player1Turn = !this.player1Turn
@@ -338,8 +338,8 @@ class GameBoard {
 }
 
 
-
-
+// inconsistent white space
+// no label comment for this class 
 class Pit {
     constructor(name) {
         this.name = name
@@ -359,7 +359,7 @@ class Pit {
 
 
     isEmpty() {
-       return this.contents.length === 0
+        return this.contents.length === 0 // indentation was off a space here
     }
 
 
@@ -395,7 +395,7 @@ class Pit {
             //wipes out all <li>
             stonesContainer.innerHTML = ""
         }// Else IF not enough <li>
-        else if(stonesContainer.childElementCount < this.contents.length) {
+        else if(stonesContainer.childElementCount < this.contents.length) { // love this conditional
             //add <li> until the same as in the pit (this should handle +1 stone)
             for(let i=stonesContainer.childElementCount; i<this.contents.length; i++){
                 const li = document.createElement("li")

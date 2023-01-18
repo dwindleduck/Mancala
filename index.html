@@ -2,7 +2,7 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
 <html>
     <head>
         <meta charset="utf-8">
@@ -16,9 +16,9 @@
     <body>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+        <![endif]--> <!-- had to look up this syntax: nice touch !  -->
         <header>
-            <h1>Mancala</h1>
+            <h1>Mancala</h1> 
         </header>
         <main id="playArea">
             <h3 id="gameTitle"></h3>
@@ -51,7 +51,7 @@
                 <li>The player with the most Stones in their Store is the winner</li>
             </ul>
         </div>
-        <footer>
+        <footer> <!-- I wouldn't have made this a footer, remember to use semantic html, `A footer typically contains information about its section such as who wrote it, links to related documents, copyright data, and the like`  -->
             <button id="instructionsButton">Instructions</button>
             <button id="newGameButton">Start a New Game</button>
             <button id="resetButton" class="hide">Reset</button>
